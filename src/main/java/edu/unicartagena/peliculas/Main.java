@@ -25,45 +25,36 @@ public final class Main {
     public static void main(String[] args) {
         System.out.println("=== CLASIFICACION DE PELICULAS ===");
         System.out.println("Peliculas del catalogo: " + CATALOGO.length);
-        System.out.println();
-
-        System.out.println("--- Catalogo original ---");
-        for (int i = 0; i < CATALOGO.length; i++) {
-            System.out.println(String.format("%2d. %s", i + 1, CATALOGO[i]));
-        }
 
         PeliculaOrdenador ordenador = new PeliculaOrdenador();
-        System.out.println();
+        mostrarCatalogo("Catalogo original", CATALOGO);
         System.out.println("Esta ordenado? (antes)   : " + ordenador.estaOrdenada(CATALOGO));
 
-        Pelicula[] ranking = Arrays.copyOf(CATALOGO, CATALOGO.length);
-        ordenador.ordenar(ranking);
-
-        System.out.println();
-        System.out.println("--- Ordenamiento manual (seleccion) ---");
-        for (int i = 0; i < ranking.length; i++) {
-            System.out.println(String.format("%2d. %s", i + 1, ranking[i]));
-        }
-
-        System.out.println();
-        System.out.println("Esta ordenado? (despues) : " + ordenador.estaOrdenada(ranking));
+        Pelicula[] rankingManual = Arrays.copyOf(CATALOGO, CATALOGO.length);
+        ordenador.ordenar(rankingManual);
+        mostrarCatalogo("Ordenamiento manual (seleccion)", rankingManual);
+        System.out.println("Esta ordenado? (despues) : " + ordenador.estaOrdenada(rankingManual));
         System.out.println("Comparaciones realizadas : " + ordenador.getComparaciones());
         System.out.println("Intercambios realizados  : " + ordenador.getIntercambios());
 
         ComparadorPeliculas comparador = new ComparadorPeliculas();
         Pelicula[] rankingComparator = Arrays.copyOf(CATALOGO, CATALOGO.length);
         Arrays.sort(rankingComparator, comparador);
+        mostrarCatalogo("Ordenamiento con Comparator", rankingComparator);
 
         System.out.println();
-        System.out.println("--- Ordenamiento con Comparator ---");
-        for (int i = 0; i < rankingComparator.length; i++) {
-            System.out.println(String.format("%2d. %s", i + 1, rankingComparator[i]));
-        }
-
-        System.out.println();
-        System.out.println("Ambos ordenamientos coinciden : " + coinciden(ranking, rankingComparator));
+        System.out.println("Ambos ordenamientos coinciden  : "
+                + coinciden(rankingManual, rankingComparator));
         System.out.println("Comparaciones con Comparator  : " + comparador.getComparaciones());
         System.out.println("Comparaciones con seleccion   : " + ordenador.getComparaciones());
+    }
+
+    private static void mostrarCatalogo(String titulo, Pelicula[] peliculas) {
+        System.out.println();
+        System.out.println("--- " + titulo + " ---");
+        for (int i = 0; i < peliculas.length; i++) {
+            System.out.println(String.format("%2d. %s", i + 1, peliculas[i]));
+        }
     }
 
     private static boolean coinciden(Pelicula[] primeras, Pelicula[] segundas) {
