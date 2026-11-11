@@ -29,5 +29,20 @@ public final class Main {
         for (int i = 0; i < CATALOGO.length; i++) {
             System.out.println(String.format("%2d. %s", i + 1, CATALOGO[i]));
         }
+
+        PeliculaOrdenador ordenador = new PeliculaOrdenador();
+        System.out.println();
+        System.out.println("Catalogo ordenado?  : " + ordenador.estaOrdenada(CATALOGO));
+        System.out.println("Mejor del catalogo  : " + buscarMejor(ordenador, CATALOGO));
+    }
+
+    private static Pelicula buscarMejor(PeliculaOrdenador ordenador, Pelicula[] peliculas) {
+        Pelicula mejor = peliculas[0];
+        for (int i = 1; i < peliculas.length; i++) {
+            if (ordenador.comparar(peliculas[i], mejor) < 0) {
+                mejor = peliculas[i];
+            }
+        }
+        return mejor;
     }
 }
