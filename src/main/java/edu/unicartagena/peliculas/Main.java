@@ -49,5 +49,32 @@ public final class Main {
         System.out.println("Esta ordenado? (despues) : " + ordenador.estaOrdenada(ranking));
         System.out.println("Comparaciones realizadas : " + ordenador.getComparaciones());
         System.out.println("Intercambios realizados  : " + ordenador.getIntercambios());
+
+        ComparadorPeliculas comparador = new ComparadorPeliculas();
+        Pelicula[] rankingComparator = Arrays.copyOf(CATALOGO, CATALOGO.length);
+        Arrays.sort(rankingComparator, comparador);
+
+        System.out.println();
+        System.out.println("--- Ordenamiento con Comparator ---");
+        for (int i = 0; i < rankingComparator.length; i++) {
+            System.out.println(String.format("%2d. %s", i + 1, rankingComparator[i]));
+        }
+
+        System.out.println();
+        System.out.println("Ambos ordenamientos coinciden : " + coinciden(ranking, rankingComparator));
+        System.out.println("Comparaciones con Comparator  : " + comparador.getComparaciones());
+        System.out.println("Comparaciones con seleccion   : " + ordenador.getComparaciones());
+    }
+
+    private static boolean coinciden(Pelicula[] primeras, Pelicula[] segundas) {
+        if (primeras.length != segundas.length) {
+            return false;
+        }
+        for (int i = 0; i < primeras.length; i++) {
+            if (primeras[i] != segundas[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 }
