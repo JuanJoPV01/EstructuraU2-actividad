@@ -1,5 +1,7 @@
 package edu.unicartagena.peliculas;
 
+import java.util.Arrays;
+
 public final class Main {
 
     private static final Pelicula[] CATALOGO = {
@@ -32,17 +34,20 @@ public final class Main {
 
         PeliculaOrdenador ordenador = new PeliculaOrdenador();
         System.out.println();
-        System.out.println("Catalogo ordenado?  : " + ordenador.estaOrdenada(CATALOGO));
-        System.out.println("Mejor del catalogo  : " + buscarMejor(ordenador, CATALOGO));
-    }
+        System.out.println("Esta ordenado? (antes)   : " + ordenador.estaOrdenada(CATALOGO));
 
-    private static Pelicula buscarMejor(PeliculaOrdenador ordenador, Pelicula[] peliculas) {
-        Pelicula mejor = peliculas[0];
-        for (int i = 1; i < peliculas.length; i++) {
-            if (ordenador.comparar(peliculas[i], mejor) < 0) {
-                mejor = peliculas[i];
-            }
+        Pelicula[] ranking = Arrays.copyOf(CATALOGO, CATALOGO.length);
+        ordenador.ordenar(ranking);
+
+        System.out.println();
+        System.out.println("--- Ordenamiento manual (seleccion) ---");
+        for (int i = 0; i < ranking.length; i++) {
+            System.out.println(String.format("%2d. %s", i + 1, ranking[i]));
         }
-        return mejor;
+
+        System.out.println();
+        System.out.println("Esta ordenado? (despues) : " + ordenador.estaOrdenada(ranking));
+        System.out.println("Comparaciones realizadas : " + ordenador.getComparaciones());
+        System.out.println("Intercambios realizados  : " + ordenador.getIntercambios());
     }
 }
